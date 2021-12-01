@@ -35,6 +35,49 @@ class LinkedList {
     }
     return str += 'NULL';
   }
+
+  append(value) {
+    if (!this.head) {
+      this.head = new Node(value);
+      return;
+    }
+    let pointer = this.head;
+    while (pointer) {
+      if (!pointer.next) {
+        pointer.next = new Node(value);
+        return;
+      } else pointer = pointer.next;
+    }
+  }
+
+  insertBefore(oldValue, newValue) {
+    let pointer = this.head;
+    if (pointer.value === oldValue) {
+      this.insert(newValue);
+    } else {
+      while (pointer.next.value !== oldValue) {
+        pointer = pointer.next;
+      }
+      let temp = pointer.next;
+      pointer.next = new Node(newValue);
+      pointer.next.next = temp;
+    }
+  }
+
+  insertAfter(oldVal, newVal) {
+    let pointer = this.head;
+    while (pointer.value !== oldVal) {
+      pointer = pointer.next;
+    }
+    if (!pointer.next) {
+      pointer.next = new Node(newVal);
+      return;
+    } else {
+      let temp = pointer.next;
+      pointer.next = new Node(newVal);
+      pointer.next.next = temp;
+    }
+  }
 }
 
 describe('Linked List', () => {
@@ -47,7 +90,6 @@ describe('Linked List', () => {
   it('Can properly insert into the linked list', () => {
     const ll = new LinkedList();
     ll.insert('a');
-    console.log(ll);
     expect(ll.head.value).toEqual('a');
     expect(ll.head.next).toBeNull();
   });
@@ -97,65 +139,65 @@ describe('Linked List', () => {
   });
 });
 
-// describe('Linked List Insertions', () => {
-//   it('Can successfully add a node to the end of the linked list', () => {
-//     const ll = new LinkedList();
-//     ll.append('a');
-//     ll.append('c');
-//     expect(ll.head.next.value).toEqual('c');
-//     expect(ll.head.next.next).toEqual(null);
-//   });
+describe('Linked List Insertions', () => {
+  it('Can successfully add a node to the end of the linked list', () => {
+    const ll = new LinkedList();
+    ll.append('a');
+    ll.append('c');
+    expect(ll.head.next.value).toEqual('c');
+    expect(ll.head.next.next).toEqual(null);
+  });
 
-//   it('Can successfully add multiple nodes to the end of a linked list', () => {
-//     const ll = new LinkedList();
-//     ll.append('a');
-//     ll.append('b');
-//     ll.append('c');
-//     expect(ll.head.value).toEqual('a');
-//     expect(ll.head.next.value).toEqual('b');
-//     expect(ll.head.next.next.value).toEqual('c');
-//   });
+  it('Can successfully add multiple nodes to the end of a linked list', () => {
+    const ll = new LinkedList();
+    ll.append('a');
+    ll.append('b');
+    ll.append('c');
+    expect(ll.head.value).toEqual('a');
+    expect(ll.head.next.value).toEqual('b');
+    expect(ll.head.next.next.value).toEqual('c');
+  });
 
-//   it('Can successfully insert a node before a node located in the middle of a linked list', () => {
-//     const ll = new LinkedList();
-//     ll.append('a');
-//     ll.append('b');
-//     ll.append('c');
-//     ll.insertBefore('b', 'z');
-//     expect(ll.head.value).toEqual('a');
-//     expect(ll.head.next.value).toEqual('z');
-//     expect(ll.head.next.next.value).toEqual('b');
-//   });
+  it('Can successfully insert a node before a node located in the middle of a linked list', () => {
+    const ll = new LinkedList();
+    ll.append('a');
+    ll.append('b');
+    ll.append('c');
+    ll.insertBefore('b', 'z');
+    expect(ll.head.value).toEqual('a');
+    expect(ll.head.next.value).toEqual('z');
+    expect(ll.head.next.next.value).toEqual('b');
+  });
 
-//   it('Can successfully insert a node before the first node of a linked list', () => {
-//     const ll = new LinkedList();
-//     ll.append('a');
-//     ll.append('b');
-//     ll.insertBefore('a', 'z');
-//     expect(ll.head.value).toEqual('z');
-//     expect(ll.head.next.value).toEqual('a');
-//     expect(ll.head.next.next.next).toEqual(null);
-//   });
+  it('Can successfully insert a node before the first node of a linked list', () => {
+    const ll = new LinkedList();
+    ll.append('a');
+    ll.append('b');
+    ll.insertBefore('a', 'z');
+    expect(ll.head.value).toEqual('z');
+    expect(ll.head.next.value).toEqual('a');
+    expect(ll.head.next.next.next).toEqual(null);
+  });
 
-//   it('Can successfully insert after a node in the middle of the linked list', () => {
-//     const ll = new LinkedList();
-//     ll.append('a');
-//     ll.append('b');
-//     ll.append('c');
-//     ll.insertAfter('b', 'z');
-//     expect(ll.head.next.value).toEqual('b');
-//     expect(ll.head.next.next.value).toEqual('z');
-//     expect(ll.head.next.next.next.value).toEqual('c');
-//   });
+  it('Can successfully insert after a node in the middle of the linked list', () => {
+    const ll = new LinkedList();
+    ll.append('a');
+    ll.append('b');
+    ll.append('c');
+    ll.insertAfter('b', 'z');
+    expect(ll.head.next.value).toEqual('b');
+    expect(ll.head.next.next.value).toEqual('z');
+    expect(ll.head.next.next.next.value).toEqual('c');
+  });
 
-//   it('Can successfully insert a node after the last node of the linked list', () => {
-//     const ll = new LinkedList();
-//     ll.append('a');
-//     ll.append('b');
-//     ll.insertAfter('b', 'z');
-//     expect(ll.head.next.value).toEqual('b');
-//     expect(ll.head.next.next.value).toEqual('z');
-//     expect(ll.head.next.next.next).toEqual(null);
-//   });
-// });
+  it('Can successfully insert a node after the last node of the linked list', () => {
+    const ll = new LinkedList();
+    ll.append('a');
+    ll.append('b');
+    ll.insertAfter('b', 'z');
+    expect(ll.head.next.value).toEqual('b');
+    expect(ll.head.next.next.value).toEqual('z');
+    expect(ll.head.next.next.next).toEqual(null);
+  });
+});
 module.exports = LinkedList;
