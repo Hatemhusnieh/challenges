@@ -78,6 +78,22 @@ class LinkedList {
       pointer.next.next = temp;
     }
   }
+
+  kthFromEnd(k) {
+    if (k < 0) return 'Exception / K is a negative number';
+    if (!this.head.next) return `Exception / Linked list is size of one, only position (0) is declared (${this.head.value})`;
+    let arr = [];
+    let pointer = this.head;
+    while (pointer) {
+      arr.push(pointer.value);
+      pointer = pointer.next;
+    }
+    if (arr.length < k) return 'Exception';
+    if (arr.length === k) return arr[0];
+    for (let i = 0; i < arr.length; i++) {
+      if (k === arr.length - 1 - i) return arr[i];
+    }
+  }
 }
 
 describe('Linked List', () => {
@@ -198,6 +214,34 @@ describe('Linked List Insertions', () => {
     expect(ll.head.next.value).toEqual('b');
     expect(ll.head.next.next.value).toEqual('z');
     expect(ll.head.next.next.next).toEqual(null);
+  });
+});
+
+describe('k-th value from the end of a linked list', () => {
+  const ll = new LinkedList();
+  ll.append(1);
+  ll.append(2);
+  ll.append(3);
+  ll.append(4);
+  ll.append(5);
+  it('Where k is greater than the length of the linked list', () => {
+    expect(ll.kthFromEnd(6)).toEqual('Exception');
+  });
+  it('Where k and the length of the list are the same', () => {
+    expect(ll.kthFromEnd(4)).toEqual(1);
+  });
+  it('Where k is not a positive integer', () => {
+    expect(ll.kthFromEnd(-1)).toEqual('Exception / K is a negative number');
+  });
+  it('Where the linked list is of a size 1', () => {
+    const ll2 = new LinkedList();
+    ll2.append(1);
+    expect(ll2.kthFromEnd(2)).toEqual('Exception / Linked list is size of one, only position (0) is declared (1)');
+  });
+  it('“Happy Path” where k is not at the end, but somewhere in the middle of the linked list', () => {
+    expect(ll.kthFromEnd(0)).toEqual(5);
+    expect(ll.kthFromEnd(1)).toEqual(4);
+    expect(ll.kthFromEnd(2)).toEqual(3);
   });
 });
 module.exports = LinkedList;
