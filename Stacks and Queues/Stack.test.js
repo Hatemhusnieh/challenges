@@ -103,3 +103,5 @@ describe('Stack', () => {
     expect(stack2.isEmpty()).toBeFalsy();
   });
 });
+
+module.exports = Stack;
