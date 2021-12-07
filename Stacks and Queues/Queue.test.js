@@ -102,3 +102,5 @@ describe('Queue', () => {
     expect(q2.isEmpty()).toBeFalsy();
   });
 });
+
+module.exports = Queue;
