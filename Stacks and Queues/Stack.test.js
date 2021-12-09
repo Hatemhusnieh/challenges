@@ -37,6 +37,16 @@ class Stack {
   isEmpty() {
     return this.front ? false : true;
   }
+
+  getMaxStack() {
+    let max = 0;
+    let pointer = this.front;
+    while (pointer) {
+      if (pointer.value > max) max = pointer.value;
+      pointer = pointer.next;
+    }
+    return max;
+  }
 }
 
 describe('Stack', () => {
