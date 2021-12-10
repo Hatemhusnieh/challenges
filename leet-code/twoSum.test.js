@@ -1,8 +1,5 @@
 'use strict';
 
-const { map } = require("cheerio/lib/api/traversing");
-
-
 function twoSum(nums, target) {
   if (nums.length < 2) return 'input array has less than the minimum length of 2';
   let arr = [];
